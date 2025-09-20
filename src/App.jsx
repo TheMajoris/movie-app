@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
+import { useDebounce  } from 'react-use'
 import Search from './components/Search.jsx'
 import Spinner from './components/Spinner.jsx'
 import './App.css'
@@ -22,6 +23,9 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [movieList, setMovieList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+
+    useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
     const fetchMovies = async (query = '') =>{
         setIsLoading(false);
